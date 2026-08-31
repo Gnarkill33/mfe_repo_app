@@ -1,6 +1,6 @@
 import React from "react";
-import MarketingApp from "./components/MarketingApp";
+import MarketingRootApp from "./components/MarketingRootApp";
 
 export default () => {
- return <MarketingApp />;
+ return <MarketingRootApp />;
 };
