@@ -1,6 +1,7 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MarketingRootApp from "./components/MarketingRootApp";
+import AuthApp from "./components/AuthApp";
 import Header from "./components/Header";
 
 export default () => {
@@ -8,7 +9,10 @@ export default () => {
   <BrowserRouter>
    <div>
     <Header />
-    <MarketingRootApp />
+    <Switch>
+     <Route path='/auth' component={AuthApp} />
+     <Route path='/' component={MarketingRootApp} />
+    </Switch>
    </div>
   </BrowserRouter>
  );
