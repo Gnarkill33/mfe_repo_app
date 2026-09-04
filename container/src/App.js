@@ -1,18 +1,26 @@
-import React from "react";
+import React, { Suspense, lazy, useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import MarketingRootApp from "./components/MarketingRootApp";
-import AuthApp from "./components/AuthApp";
 import Header from "./components/Header";
+import Progress from "./components/Progress";
+
+const AuthLazy = lazy(() => import("./components/AuthApp"));
+const MarketingLazy = lazy(() => import("./components/MarketingRootApp"));
 
 export default () => {
+ const [isSignedIn, setIsSignedIn] = useState(false);
+
  return (
   <BrowserRouter>
    <div>
-    <Header />
-    <Switch>
-     <Route path='/auth' component={AuthApp} />
-     <Route path='/' component={MarketingRootApp} />
-    </Switch>
+    <Header isSignedIn={isSignedIn} onSignOut={() => setIsSignedIn(false)} />
+    <Suspense fallback={<Progress />}>
+     <Switch>
+      <Route path='/auth'>
+       <AuthLazy onSignIn={() => setIsSignedIn(true)} />
+      </Route>
+      <Route path='/' component={MarketingLazy} />
+     </Switch>
+    </Suspense>
    </div>
   </BrowserRouter>
  );
